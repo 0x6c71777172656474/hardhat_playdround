@@ -1,14 +1,15 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
+import "dotenv/config";
+import "solidity-coverage";
 
 const config: HardhatUserConfig = {
-  networks:{
-    // hardhat: {
-    //   // forking: {
-    //   //   url: "",
-    //   //   blockNumber: 16510753,
-    //   // }
-    // }
+  networks: {
+    goerli: {
+      url: process.env.ALCHEMY_GOERLI,
+      chainId: 5,
+      accounts: [process.env.PRIVATE_KEY || ""],
+    },
   },
   solidity: {
     compilers: [
@@ -21,27 +22,16 @@ const config: HardhatUserConfig = {
           },
         },
       },
-      {
-        version: "0.7.6",
-        settings: {
-          optimizer: {
-            enabled: true,
-            runs: 1000,
-          },
-        },
-      },
-      {
-        version: "0.4.18",
-        settings: {
-          optimizer: {
-            enabled: true,
-            runs: 1000,
-          },
-        },
-      },
     ],
   },
-  
+  mocha: {
+    timeout: 40000,
+  },
+  etherscan: {
+    apiKey: {
+      goerli: process.env.ETHERSCAN_API || "",
+    },
+  },
 };
 
 export default config;

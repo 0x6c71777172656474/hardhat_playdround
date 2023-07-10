@@ -19,13 +19,16 @@ contract Shop {
     receive() external payable {
         uint tokensToBuy = msg.value;
         require(tokensToBuy > 0, Errors.NOT_ENOUGH_FUNDS);
-        require( tokenBalance() >= tokensToBuy, Errors.NOT_ENOUGH_SHOP_TOKENS);
+        require(tokenBalance() >= tokensToBuy, Errors.NOT_ENOUGH_SHOP_TOKENS);
         token.transfer(msg.sender, tokensToBuy);
         emit Bought(tokensToBuy, msg.sender);
     }
 
     function sell(uint _amount) public {
-        require(_amount > 0 && token.balanceOf(msg.sender) >= _amount, Errors.INCORRECT_AMOUNT);
+        require(
+            _amount > 0 && token.balanceOf(msg.sender) >= _amount,
+            Errors.INCORRECT_AMOUNT
+        );
         uint allowance = token.allowance(msg.sender, address(this));
         require(allowance >= _amount, Errors.OVER_ALLOWANCE);
         token.transferFrom(msg.sender, address(this), _amount);
@@ -34,7 +37,7 @@ contract Shop {
         emit Sold(_amount, msg.sender);
     }
 
-    function tokenBalance() public view returns(uint) {
+    function tokenBalance() public view returns (uint) {
         return token.balanceOf(address(this));
     }
 

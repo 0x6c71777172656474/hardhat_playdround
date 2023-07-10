@@ -21,6 +21,12 @@ describe("CallLoggerDemo contract", async () => {
     await callLoggerDemo.deployed();
   });
 
+  it("Should NOT pay because of zero address", async () => {
+    await expect(
+      callLoggerDemo.payment(ethers.constants.AddressZero, 0)
+    ).revertedWith("0");
+  });
+
   it("Should pay and get payment info", async () => {
     const sum = 100;
     const txData = {

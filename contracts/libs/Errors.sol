@@ -8,4 +8,5 @@ library Errors {
     string public constant NOT_OWNER = "3"; // Not a shop owner
     string public constant INCORRECT_AMOUNT = "4"; // Amount should NOT be zero or incorrect
     string public constant OVER_ALLOWANCE = "5"; // Cannot transfer amount greater than allowance
+    string public constant REQUEST_NOT_FOUND = "6"; // Request not found
 }
